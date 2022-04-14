@@ -3,7 +3,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
 } from "firebase/auth";
 import swal from "sweetalert";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ const useFirebase = () => {
   const [user, setUser] = useState();
   const [loading, setIsloading] = useState(true);
   const [error, setError] = useState();
-  const registerUser = (email, password) => {
+  const registerUser = (email, password,navigate) => {
     setIsloading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -24,6 +24,7 @@ const useFirebase = () => {
           icon: "success",
           timer: 1500,
         });
+        navigate('/dashboard')
         setError("");
         setIsloading(false);
       })
@@ -39,7 +40,7 @@ const useFirebase = () => {
       .finally(() => setIsloading(false));
   };
 
-  const loginUser = (email, password,location,navigate) => {
+  const loginUser = (email, password, location, navigate) => {
     setIsloading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -48,8 +49,8 @@ const useFirebase = () => {
           icon: "success",
           timer: 2500,
         });
-       const redirect = location?.state?.from || '/'
-      navigate(redirect)
+        const redirect = "/dashboard";
+        navigate(redirect);
         setError("");
       })
       .catch((error) => {

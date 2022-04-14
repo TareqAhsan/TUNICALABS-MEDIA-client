@@ -81,7 +81,7 @@ const Login = () => {
               />
             </div>
             <div className="mb-3">
-              {error && <Alert variant="danger">{error}</Alert>}
+              {/* {error && <Alert variant="danger">{error}</Alert>} */}
               <Link to="/register">Dont have an account ? Signup</Link>
             </div>
           </form>

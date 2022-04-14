@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Alert, Spinner } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Layout from "../layout";
 
 const Register = () => {
   const [loginData, setLoginData] = useState();
+  const navigate = useNavigate();
   const { registerUser, user, loading } = useAuth();
   const hanleChange = (e) => {
     const field = e.target.name;
+
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     const newvalue = { ...loginData };
@@ -21,7 +23,7 @@ const Register = () => {
       alert("password did not match");
       return;
     }
-    registerUser(loginData.email, loginData.password);
+    registerUser(loginData.email, loginData.password, navigate);
   };
   return (
     <Layout>

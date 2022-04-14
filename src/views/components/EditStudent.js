@@ -1,12 +1,12 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import swal from "sweetalert";
 import useAuth from "../../hooks/useAuth";
 const EditStudent = () => {
   const { user } = useAuth();
-
+  const { Data, setData } = useState();
   const {
     register,
     handleSubmit,
@@ -15,7 +15,16 @@ const EditStudent = () => {
   } = useForm();
 
   const { id } = useParams();
-
+  // const singleStu = async () => {
+  //   const res = await fetch(
+  //     `http://localhost:5000/dashboard/singleData/${id}`
+  //   );
+  //   const result = await res.json()
+  //   setData(result.data);
+  // }
+  // useEffect(()=>{
+  //   singleStu()
+  // })
   const onSubmit = async (data) => {
     console.log(data);
     const result = await axios.put(
@@ -44,7 +53,7 @@ const EditStudent = () => {
           <div className="col-sm-10 col-lg-6">
             <input
               placeholder="Name"
-              {...register("name", { required: true })}
+              {...register("name")}
               className="form-control"
               type="text"
             />
@@ -63,13 +72,10 @@ const EditStudent = () => {
           <div className="col-sm-10 col-lg-6">
             <input
               placeholder="mm/dd/yyyy"
-              {...register("date", { required: true })}
+              {...register("date")}
               className="form-control"
               type="date"
             />
-            {errors.date && (
-              <span className="text-danger">This field is required</span>
-            )}
           </div>
         </div>
         <div className="mb-3 row">
@@ -83,7 +89,7 @@ const EditStudent = () => {
             <select
               className="form-select"
               aria-label="Default select example"
-              {...register("school", { required: true })}
+              {...register("school")}
             >
               <option defaultValue="select">select</option>
               <option value="Diu">Diu</option>
@@ -92,9 +98,6 @@ const EditStudent = () => {
               <option value="kulalampur">kulalampur</option>
               <option value="primary school">primary school</option>
             </select>
-            {errors.school && (
-              <span className="text-danger">This field is required</span>
-            )}
           </div>
         </div>
         <div className="mb-3 row">
@@ -108,7 +111,7 @@ const EditStudent = () => {
             <select
               className="form-select"
               aria-label="Default select example"
-              {...register("class", { required: true })}
+              {...register("class")}
             >
               <option defaultValue="select">select</option>
               <option value="1">1</option>
@@ -146,9 +149,6 @@ const EditStudent = () => {
               <option value="16">16</option>
               <option value="18">18</option>
             </select>
-            {errors.age && (
-              <span className="text-danger">This field is required</span>
-            )}
           </div>
         </div>
         <div className="mb-3 row">
@@ -162,16 +162,13 @@ const EditStudent = () => {
             <select
               className="form-select"
               aria-label="Default select example"
-              {...register("division", { required: true })}
+              {...register("division")}
             >
               <option defaultValue="select">select</option>
               <option value="A">A</option>
               <option value="B">B</option>
               <option value="C">C</option>
             </select>
-            {errors.division && (
-              <span className="text-danger">This field is required</span>
-            )}
           </div>
         </div>
         <div className="mb-3 row">
@@ -185,7 +182,7 @@ const EditStudent = () => {
             <input
               className="form-check-input mx-2"
               type="radio"
-              {...register("status", { required: true })}
+              {...register("status")}
               value="Active"
             />
             <label className="form-check-label" htmlFor="exampleRadios1">
@@ -194,15 +191,15 @@ const EditStudent = () => {
             <input
               className="form-check-input mx-2"
               type="radio"
-              {...register("status", { required: true })}
+              {...register("status")}
               value="Invoice"
             />
             <label className="form-check-label" htmlFor="exampleRadios1">
               Invoice
             </label>
-            {errors.status && (
+            {/* {errors.status && (
               <span className="text-danger">This field is required</span>
-            )}
+            )} */}
           </div>
         </div>
 
