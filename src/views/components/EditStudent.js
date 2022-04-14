@@ -6,7 +6,7 @@ import swal from "sweetalert";
 import useAuth from "../../hooks/useAuth";
 const EditStudent = () => {
   const { user } = useAuth();
-  const { Data, setData } = useState();
+  const [Data, setData]  = useState();
   const {
     register,
     handleSubmit,
@@ -15,16 +15,18 @@ const EditStudent = () => {
   } = useForm();
 
   const { id } = useParams();
-  // const singleStu = async () => {
-  //   const res = await fetch(
-  //     `http://localhost:5000/dashboard/singleData/${id}`
-  //   );
-  //   const result = await res.json()
-  //   setData(result.data);
-  // }
-  // useEffect(()=>{
-  //   singleStu()
-  // })
+ 
+  useEffect(()=>{
+    const singleStu = async () => {
+      const res = await fetch(
+        `https://polar-temple-97573.herokuapp.com/dashboard/singleData/${id}`
+      );
+      const result = await res.json()
+      await setData(result);
+      console.log(result)
+    }
+    singleStu()
+  },[id])
   const onSubmit = async (data) => {
     console.log(data);
     const result = await axios.put(
@@ -52,6 +54,7 @@ const EditStudent = () => {
           </label>
           <div className="col-sm-10 col-lg-6">
             <input
+              defaultValue={Data?.name}
               placeholder="Name"
               {...register("name")}
               className="form-control"
@@ -71,6 +74,7 @@ const EditStudent = () => {
           </label>
           <div className="col-sm-10 col-lg-6">
             <input
+              defaultValue={Data?.date}
               placeholder="mm/dd/yyyy"
               {...register("date")}
               className="form-control"
@@ -91,7 +95,7 @@ const EditStudent = () => {
               aria-label="Default select example"
               {...register("school")}
             >
-              <option defaultValue="select">select</option>
+              <option defaultValue={Data?.school}>{Data?.school}</option>
               <option value="Diu">Diu</option>
               <option value="abu Taleb">abu Taleb</option>
               <option value="model high school">model high school</option>
@@ -113,7 +117,7 @@ const EditStudent = () => {
               aria-label="Default select example"
               {...register("class")}
             >
-              <option defaultValue="select">select</option>
+              <option defaultValue={Data?.class}>{Data?.class}</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -143,7 +147,7 @@ const EditStudent = () => {
               aria-label="Default select example"
               {...register("age", { required: true })}
             >
-              <option defaultValue="select">select</option>
+            <option defaultValue={Data?.age}>{Data?.age}</option>
               <option value="12">12</option>
               <option value="14">14</option>
               <option value="16">16</option>
@@ -164,7 +168,7 @@ const EditStudent = () => {
               aria-label="Default select example"
               {...register("division")}
             >
-              <option defaultValue="select">select</option>
+             <option defaultValue={Data?.division}>{Data?.division}</option>
               <option value="A">A</option>
               <option value="B">B</option>
               <option value="C">C</option>
