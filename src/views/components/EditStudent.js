@@ -54,12 +54,12 @@ const EditStudent = () => {
           </label>
           <div className="col-sm-10 col-lg-6">
             <input
-              defaultValue={Data?.name}
+              // value={Data?.name}
               placeholder="Name"
               {...register("name")}
               className="form-control"
               type="text"
-            />
+             />
             {errors.name && (
               <span className="text-danger">This field is required</span>
             )}
@@ -74,7 +74,7 @@ const EditStudent = () => {
           </label>
           <div className="col-sm-10 col-lg-6">
             <input
-              defaultValue={Data?.date}
+              // value={Data?.date}
               placeholder="mm/dd/yyyy"
               {...register("date")}
               className="form-control"
@@ -95,7 +95,7 @@ const EditStudent = () => {
               aria-label="Default select example"
               {...register("school")}
             >
-              <option defaultValue={Data?.school}>{Data?.school}</option>
+              <option value={Data?.school} selected>{Data?.school}</option>
               <option value="Diu">Diu</option>
               <option value="abu Taleb">abu Taleb</option>
               <option value="model high school">model high school</option>
@@ -117,7 +117,7 @@ const EditStudent = () => {
               aria-label="Default select example"
               {...register("class")}
             >
-              <option defaultValue={Data?.class}>{Data?.class}</option>
+              <option value={Data?.class} selected>{Data?.class}</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -147,7 +147,7 @@ const EditStudent = () => {
               aria-label="Default select example"
               {...register("age", { required: true })}
             >
-            <option defaultValue={Data?.age}>{Data?.age}</option>
+            <option value={Data?.age} selected>{Data?.age}</option>
               <option value="12">12</option>
               <option value="14">14</option>
               <option value="16">16</option>
@@ -168,7 +168,7 @@ const EditStudent = () => {
               aria-label="Default select example"
               {...register("division")}
             >
-             <option defaultValue={Data?.division}>{Data?.division}</option>
+             <option value={Data?.division} selected>{Data?.division}</option>
               <option value="A">A</option>
               <option value="B">B</option>
               <option value="C">C</option>

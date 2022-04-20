@@ -8,7 +8,7 @@ const Dashboard = () => {
   return (
     <Layout>
       <div className={styles.sidebar}>
-        <Link className="active" to="/dashboard/viewstudent">
+        <Link className="active" to="/dashboard">
           <FontAwesomeIcon icon={faUsersViewfinder} className="mx-2" />view
           Student
         </Link>
