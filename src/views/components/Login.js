@@ -18,7 +18,7 @@ const Login = () => {
     setLogData(newvalue);
   };
   const handleSubmit = (e) => {
-    loginUser(logdata.email, logdata.password,location,navigate);
+    loginUser(logdata.email, logdata.password,navigate);
     e.preventDefault();
   };
   return (

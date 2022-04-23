@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { React, useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import { useForm } from "react-hook-form";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import useAuth from "../../hooks/useAuth";
+
 const ViewStudent = () => {
   const [allStudent, setAllStudent] = useState();
   const [display, setDisplay] = useState();
@@ -50,18 +52,35 @@ const ViewStudent = () => {
       }
     }
   };
-
+  let value;
   const handleChange = async (e) => {
-    const value = e.target.value;
+    value = e.target.value;
+    console.log(value);
     const result = await axios(
       `https://polar-temple-97573.herokuapp.com/dashboard/search?value=${value}&&email=${user?.email}`
     );
 
     setDisplay(result.data);
   };
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async (data) => {
+    data.email = user?.email;
+    // console.log(data);
+    const result = await axios(`https://polar-temple-97573.herokuapp.com/dashboard/search/all`, {
+      params: { data },
+    });
+    // setDisplay(result.data)
+    console.log(result.data);
+    setDisplay(result.data);
+  };
   return (
     <div>
-      <form className="row g-3 my-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="row g-3 my-4">
         <div className="col-auto">
           <input
             type="text"
@@ -70,7 +89,73 @@ const ViewStudent = () => {
             onChange={handleChange}
           />
         </div>
+        <div className="col-auto">
+          <input
+            type="text"
+            className="form-control form-control-lg"
+            placeholder="Age"
+            {...register("age")}
+          />
+        </div>
+        <div className="col-auto">
+          <select
+            className="form-select form-control form-control-lg"
+            // aria-label="Default select example"
+            {...register("school", { required: true })}
+          >
+            <option defaultValue="select">School</option>
+            <option value="Diu">Diu</option>
+            <option value="abu Taleb">abu Taleb</option>
+            <option value="model high school">model high school</option>
+            <option value="kulalampur">kulalampur</option>
+            <option value="primary school">primary school</option>
+          </select>
+          {errors.school && (
+            <span className="text-danger">This field is required</span>
+          )}
+        </div>
+        <div className="col-auto">
+          <select
+            className="form-select"
+            aria-label="Default select example"
+            {...register("class", { required: true })}
+          >
+            <option defaultValue="select">class</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="3">4</option>
+            <option value="3">5</option>
+            <option value="3">6</option>
+            <option value="3">7</option>
+            <option value="3">8</option>
+            <option value="3">9</option>
+            <option value="3">10</option>
+          </select>
+          {errors.class && (
+            <span className="text-danger">This field is required</span>
+          )}
+        </div>
+        <div className="col-auto">
+          <select
+            className="form-select"
+            aria-label="Default select example"
+            {...register("division", { required: true })}
+          >
+            <option defaultValue="select">division</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+          </select>
+          {errors.division && (
+            <span className="text-danger">This field is required</span>
+          )}
+        </div>{" "}
+        <div className="col-auto">
+          <button className="btn btn-primary" type="submit">search</button>{" "}
+        </div>
       </form>
+      {/* extra form  */}
       <Table striped bordered hover id="table-to-xls">
         <thead>
           <tr>

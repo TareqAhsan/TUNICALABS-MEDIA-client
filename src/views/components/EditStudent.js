@@ -56,7 +56,7 @@ const EditStudent = () => {
             <input
               // value={Data?.name}
               placeholder="Name"
-              {...register("name")}
+              {...register("name",{ required: true })}
               className="form-control"
               type="text"
              />
@@ -93,7 +93,7 @@ const EditStudent = () => {
             <select
               className="form-select"
               aria-label="Default select example"
-              {...register("school")}
+              {...register("school",{ required: true })}
             >
               <option value={Data?.school} selected>{Data?.school}</option>
               <option value="Diu">Diu</option>
@@ -115,7 +115,7 @@ const EditStudent = () => {
             <select
               className="form-select"
               aria-label="Default select example"
-              {...register("class")}
+              {...register("class",{ required: true })}
             >
               <option value={Data?.class} selected>{Data?.class}</option>
               <option value="1">1</option>
@@ -166,7 +166,7 @@ const EditStudent = () => {
             <select
               className="form-select"
               aria-label="Default select example"
-              {...register("division")}
+              {...register("division",{ required: true })}
             >
              <option value={Data?.division} selected>{Data?.division}</option>
               <option value="A">A</option>
