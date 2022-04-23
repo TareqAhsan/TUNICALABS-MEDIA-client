@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import swal from "sweetalert";
 import useAuth from "../../hooks/useAuth";
 const EditStudent = () => {
@@ -15,7 +15,7 @@ const EditStudent = () => {
   } = useForm();
 
   const { id } = useParams();
- 
+ const navigate = useNavigate();
   useEffect(()=>{
     const singleStu = async () => {
       const res = await fetch(
@@ -29,9 +29,17 @@ const EditStudent = () => {
   },[id])
   const onSubmit = async (data) => {
     console.log(data);
+    const newEvent = {
+      name : data.name,
+      school : data.school,
+      class : data.class,
+      status : data.status,
+      divison : data.divison,
+      age : data.age
+    }
     const result = await axios.put(
       `https://polar-temple-97573.herokuapp.com/dashboard/edit/${id}`,
-      data
+      newEvent
     );
     if (result.data.modifiedCount) {
       swal({
@@ -40,6 +48,7 @@ const EditStudent = () => {
         timer: 1500,
       });
       reset();
+      navigate('/dashboard')
     }
   };
   return (
@@ -54,7 +63,7 @@ const EditStudent = () => {
           </label>
           <div className="col-sm-10 col-lg-6">
             <input
-              // value={Data?.name}
+              defaultValue={Data?.name}
               placeholder="Name"
               {...register("name",{ required: true })}
               className="form-control"
@@ -74,9 +83,8 @@ const EditStudent = () => {
           </label>
           <div className="col-sm-10 col-lg-6">
             <input
-              // value={Data?.date}
               placeholder="mm/dd/yyyy"
-              {...register("date")}
+              {...register("date",{ required: true })}
               className="form-control"
               type="date"
             />
@@ -95,7 +103,7 @@ const EditStudent = () => {
               aria-label="Default select example"
               {...register("school",{ required: true })}
             >
-              <option value={Data?.school} selected>{Data?.school}</option>
+              <option defaultValue={Data?.school}>{Data?.school}</option>
               <option value="Diu">Diu</option>
               <option value="abu Taleb">abu Taleb</option>
               <option value="model high school">model high school</option>
